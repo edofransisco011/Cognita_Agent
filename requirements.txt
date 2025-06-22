@@ -28,3 +28,5 @@ pydantic              # For data validation, used heavily by FastAPI
 # Evaluation and Observability
 langsmith             # The tracing and debugging platform
 ragas                 # Evaluation framework for RAG
+langchain-tavily
+pypdf
