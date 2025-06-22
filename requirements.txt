@@ -1,0 +1,30 @@
+# Core orchestration and LLM interaction
+langchain
+langgraph
+langchain_community
+langchain_openai # Used for standardized components and APIs
+transformers      # To run Qwen models locally
+
+# Model acceleration and performance
+torch
+accelerate
+bitsandbytes      # For 8-bit quantization to run large models on less VRAM
+
+# Tooling: RAG and Web Search
+sentence-transformers # For creating text embeddings
+chromadb              # Vectorstore for our RAG pipeline
+tavily-python         # Web search tool API
+
+# Deployment and API
+fastapi
+uvicorn[standard]
+
+# Utilities
+python-dotenv         # To manage environment variables from a .env file
+requests              # For making HTTP requests (e.g., in tools)
+beautifulsoup4        # For web scraping if needed
+pydantic              # For data validation, used heavily by FastAPI
+
+# Evaluation and Observability
+langsmith             # The tracing and debugging platform
+ragas                 # Evaluation framework for RAG
