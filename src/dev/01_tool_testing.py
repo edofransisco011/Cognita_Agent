@@ -1,42 +1,37 @@
 import os
 from dotenv import load_dotenv
-from tavily import TavilyClient
-from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_tavily import TavilySearch # New recommended import
 
 def test_tavily_tool():
     """
-    A script to test the Tavily Search API and its LangChain Tool wrapper.
+    A script to test the LATEST Tavily Search tool.
     """
-    print("--- Starting Tool Test ---")
+    print("--- Starting Tool Test (v2) ---")
 
-    # 1. Load environment variables from .env file
+    # 1. Load environment variables
     load_dotenv()
     tavily_api_key = os.getenv("TAVILY_API_KEY")
     if not tavily_api_key:
         raise ValueError("TAVILY_API_KEY not found in .env file. Please add it.")
 
-    # 2. Test the TavilyClient directly
-    print("\n--- Testing TavilyClient directly ---")
-    client = TavilyClient(api_key=tavily_api_key)
-    response = client.search(query="What are the latest advancements in Large Language Models as of 2025?")
-    print("Direct API Response Keys:", response.keys())
-    # Print content of the first result
-    print("Content of first result:", response['results'][0]['content'])
+    # 2. Instantiate the LangChain TavilySearch tool
+    # This is the new, recommended way.
+    print("\n--- Testing LangChain TavilySearch tool ---")
+    tavily_tool = TavilySearch(max_results=5)
 
-    # 3. Test the LangChain TavilySearchResults Tool
-    print("\n--- Testing LangChain TavilySearchResults tool ---")
-    tavily_tool = TavilySearchResults(max_results=5)
-
-    # Inspect the tool's properties
+    # 3. Inspect the tool's properties
     print("Tool Name:", tavily_tool.name)
     print("Tool Description:", tavily_tool.description)
-
-    # Invoke the tool
-    tool_results = tavily_tool.invoke({"query": "What are the latest advancements in Large Language Models as of 2025?"})
-
-    print("Tool Invocation Results (type):", type(tool_results))
-    print("First few characters of tool results:", tool_results[:200])
-
+    
+    # 4. Invoke the tool
+    # Note: The output format of this new tool is a list of strings by default,
+    # which is often cleaner for an LLM to process.
+    tool_results = tavily_tool.invoke("What are the latest advancements in Large Language Models as of 2025?")
+    
+    print("\nTool Invocation Results (type):", type(tool_results))
+    print("\nFirst Result:")
+    print(tool_results[0]) # Print the first result string
+    
     print("\n--- Tool Test Finished ---")
 
 if __name__ == "__main__":
